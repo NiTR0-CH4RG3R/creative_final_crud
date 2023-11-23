@@ -19,6 +19,15 @@ namespace creative_final_crud {
                 )
             );
 
+            // Enable CORS (Cross-Origin Resource Sharing) headers globally so that the Blazor client (or any other client) web app can access the API
+            builder.Services.AddCors( options => {
+                options.AddPolicy( "CorsPolicy", builder => {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -33,6 +42,8 @@ namespace creative_final_crud {
             app.UseAuthorization();
 
             app.MapControllers();
+
+            app.UseCors("CorsPolicy");
 
             app.Run();
         }
